@@ -62,7 +62,7 @@ web2app() {
     <key>CFBundleIconFile</key>
     <string>${APP_NAME}.png</string>
     <key>CFBundleIdentifier</key>
-    <string>com.omakub.${APP_NAME,,}</string>
+    <string>com.omakub.${APP_NAME:l}</string>
     <key>CFBundleName</key>
     <string>${APP_NAME}</string>
     <key>CFBundlePackageType</key>

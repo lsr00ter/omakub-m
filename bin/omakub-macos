@@ -1,0 +1,28 @@
+#!/bin/zsh
+
+# Set OMAKUB_PATH for macOS
+export OMAKUB_PATH="$HOME/.local/share/omakub-macos"
+
+# Check if OMAKUB_PATH exists
+if [ ! -d "$OMAKUB_PATH" ]; then
+    echo "Error: Omakub for macOS is not installed at $OMAKUB_PATH"
+    echo "Please run the installation script first."
+    exit 1
+fi
+
+# Check if required files exist
+if [ ! -f "$OMAKUB_PATH/bin/omakub-sub-macos/header.sh" ] || [ ! -f "$OMAKUB_PATH/bin/omakub-sub-macos/menu.sh" ]; then
+    echo "Error: Required Omakub files are missing or corrupted."
+    echo "Please reinstall Omakub for macOS."
+    exit 1
+fi
+
+# Check if gum is installed
+if ! command -v gum &> /dev/null; then
+    echo "Error: 'gum' command not found."
+    echo "Please install gum via Homebrew: brew install gum"
+    exit 1
+fi
+
+source $OMAKUB_PATH/bin/omakub-sub-macos/header.sh
+source $OMAKUB_PATH/bin/omakub-sub-macos/menu.sh

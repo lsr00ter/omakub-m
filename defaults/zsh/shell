@@ -1,7 +1,6 @@
 # History control
 setopt HIST_APPEND
-setopt HIST_IGNORE_BOTH
-setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_IGNORE_SPACE
 setopt HIST_VERIFY
 setopt SHARE_HISTORY
@@ -16,13 +15,7 @@ compinit
 # Case insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-# Set complete path for macOS
-export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omakub-macos/bin:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
-
-# macOS-specific environment variables
-export OMAKUB_PATH="$HOME/.local/share/omakub-macos"
-
-# Detect architecture and set Homebrew path
+# Detect architecture and set Homebrew path FIRST
 if [[ $(uname -m) == "arm64" ]]; then
     export HOMEBREW_PREFIX="/opt/homebrew"
 else
@@ -31,6 +24,12 @@ fi
 
 # Add Homebrew to PATH
 eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+
+# macOS-specific environment variables
+export OMAKUB_PATH="$HOME/.local/share/omakub-macos"
+
+# Set complete path for macOS (now HOMEBREW_PREFIX is defined)
+export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omakub-macos/bin:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
 
 # Configure PKG_CONFIG_PATH for Homebrew libraries
 export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/openssl@3/lib/pkgconfig:$PKG_CONFIG_PATH"

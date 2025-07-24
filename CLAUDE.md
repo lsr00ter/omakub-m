@@ -49,6 +49,8 @@ Info-only scripts: ASD Control, Mainline Kernels (Linux-specific, not applicable
 
 The main command interface is through the `omakub` binary located at `bin/omakub`:
 
+**Ubuntu Version:**
+
 - `omakub` - Interactive menu with Theme, Font, Update, Install, Uninstall, Manual options
 - `omakub theme` - Change system theme
 - `omakub font` - Change terminal font
@@ -57,20 +59,158 @@ The main command interface is through the `omakub` binary located at `bin/omakub
 - `omakub uninstall` - Remove specific applications
 - `omakub manual` - Manual configuration options
 
+**macOS Version:**
+
+- `omakub-macos` or `~/.local/share/omakub-macos/bin/omakub-macos` - Interactive menu for macOS
+- `omakub-macos theme` - Change themes (Alacritty, Zellij, Neovim, btop, VSCode - no GNOME)
+- `omakub-macos font` - Install programming fonts to ~/Library/Fonts/
+- `omakub-macos update` - Update Omakub and Homebrew packages
+- `omakub-macos install` - Install macOS applications via Homebrew Cask
+- `omakub-macos uninstall` - Remove applications using uninstall-macos scripts
+- `omakub-macos manual` - macOS-specific manual configuration options
+
 ### Development and Testing
 
 - No traditional build/test/lint commands - this is a shell script collection
 - Test changes by running installation scripts in a fresh Ubuntu environment
 - Scripts use `set -e` for error handling and immediate exit on failures
 
-## Architecture
+## macOS Bin Folder Functionality
+
+### Overview
+
+The macOS version includes a complete adaptation of the bin folder functionality with macOS-specific implementations:
+
+### Main Command: `omakub-macos`
+
+Located at `bin/omakub-macos`, this is the main entry point for macOS management. It provides an interactive menu system using `gum` for all post-installation management tasks.
+
+### macOS Subcommands (`bin/omakub-sub-macos/`)
+
+All subcommands are adapted for macOS using zsh instead of bash:
+
+#### Core Management Scripts
+
+- **`header.sh`** - Displays ASCII art and version info with "macOS" designation
+- **`menu.sh`** - Interactive menu system with Theme, Font, Update, Install, Uninstall, Manual, Quit options
+- **`theme.sh`** - Apply themes to macOS-compatible applications:
+  - Alacritty terminal themes (same as Ubuntu)
+  - Zellij multiplexer themes (same as Ubuntu)
+  - Neovim editor themes (same as Ubuntu)
+  - btop system monitor themes (same as Ubuntu)
+  - VSCode themes (same as Ubuntu)
+  - **Excludes**: GNOME themes (not applicable), tophat themes (Linux-specific)
+  - **Includes**: macOS-specific theme scripts if available (`themes/*/macos.sh`)
+
+#### Font Management
+
+- **`font.sh`** - Install Nerd Fonts for programming:
+  - Downloads fonts using `curl` instead of `wget`
+  - Installs to `~/Library/Fonts/` (macOS user fonts directory)
+  - Uses `system_profiler SPFontsDataType` to check if fonts are installed
+  - Updates Alacritty config and VSCode settings (macOS paths)
+  - Supports: Cascadia Mono, Fira Mono, JetBrains Mono, Meslo
+- **`font-size.sh`** - Change terminal font size (7-14pt) with immediate preview
+
+#### Installation Management
+
+- **`install.sh`** - Install additional applications:
+  - **Development**: Cursor, Zed, Windsurf, RubyMine (via Homebrew Cask)
+  - **Applications**: 1Password, Spotify, Steam, OBS Studio, etc.
+  - **Utilities**: Dropbox, VirtualBox, Parallels Desktop
+  - **Development Tools**: Ollama, language environments, databases
+  - Uses `install/desktop-macos/optional/` and `install/terminal-macos/` paths
+- **`install-dev-editor.sh`** - Dedicated development editor installer
+- **`uninstall.sh`** - Remove applications using `uninstall-macos/` scripts
+
+#### Update Management
+
+- **`update.sh`** - Update applications and tools:
+  - **Omakub**: Git pull and run migrations
+  - **Homebrew**: `brew update && brew upgrade && brew cleanup`
+  - **Applications**: Ollama, LazyGit, LazyDocker, Neovim, Zellij
+  - Uses `install/terminal-macos/app-*.sh` for application updates
+- **`migrate.sh`** - Handle Omakub version migrations for macOS
+
+#### Configuration and Help
+
+- **`manual.sh`** - Manual configuration guidance:
+  - Web app creation using `web2app` function
+  - Homebrew package management commands
+  - Font installation and management
+  - macOS system configuration via `defaults` commands
+  - System Preferences navigation guidance
+
+### Key macOS Adaptations
+
+#### Shell Environment
+
+- All scripts use `#!/bin/zsh` instead of `#!/bin/bash`
+- Uses zsh-specific features where applicable
+- Maintains compatibility with existing Ubuntu bash logic
+
+#### Path Adaptations
+
+- `OMAKUB_PATH="$HOME/.local/share/omakub-macos"`
+- Font installation: `~/Library/Fonts/` instead of `~/.local/share/fonts`
+- VSCode settings: `~/Library/Application Support/Code/User/` instead of `~/.config/Code/User/`
+- Uses `$HOMEBREW_PREFIX` for Homebrew paths (supports both Intel and Apple Silicon)
+
+#### Command Adaptations
+
+- `curl` instead of `wget` for downloads
+- `system_profiler SPFontsDataType` instead of `fc-list` for font detection
+- `sed -i ''` instead of `sed -i` for in-place editing
+- Homebrew Cask installations instead of apt/flatpak
+
+#### Application Differences
+
+- **Removed**: GNOME-specific applications and themes
+- **Added**: macOS-specific applications (Parallels Desktop, etc.)
+- **Modified**: Application installation methods use Homebrew Cask
+- **Enhanced**: Web app creation with native macOS app bundles
+
+### Usage Examples
+
+```bash
+# Run main menu
+omakub-macos
+
+# Direct commands
+omakub-macos theme
+omakub-macos font
+omakub-macos install
+omakub-macos update
+
+# Or use full path
+~/.local/share/omakub-macos/bin/omakub-macos
+```
+
+### Integration with Shell
+
+The `defaults/zsh/shell` script adds the macOS bin directory to PATH:
+
+```bash
+export PATH="$HOME/.local/share/omakub-macos/bin:$PATH"
+```
+
+This allows running `omakub-macos` from anywhere in the terminal after the shell configuration is loaded.
 
 ### Core Structure
+
+**Ubuntu:**
 
 - `boot.sh` - Entry point that clones repository and starts installation
 - `install.sh` - Main orchestrator that handles terminal and desktop installation
 - `bin/omakub` - CLI interface for post-installation management
 - `bin/omakub-sub/` - Subcommands for the CLI interface
+
+**macOS:**
+
+- `boot-macos.sh` - macOS entry point with Homebrew setup and repository cloning
+- `install-macos.sh` - Main macOS orchestrator for terminal and desktop installation
+- `bin/omakub-macos` - CLI interface for macOS post-installation management
+- `bin/omakub-sub-macos/` - macOS-specific subcommands using zsh instead of bash
 
 ### Installation Framework
 

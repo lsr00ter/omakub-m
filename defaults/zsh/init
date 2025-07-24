@@ -12,12 +12,17 @@ fi
 
 # fzf - fuzzy finder with key bindings
 if command -v fzf &> /dev/null; then
-  # macOS Homebrew fzf integration
+  # macOS Homebrew fzf integration with fallback
   if [[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh" ]]; then
     source "$HOMEBREW_PREFIX/opt/fzf/shell/completion.zsh"
+  elif [[ -f "/usr/local/opt/fzf/shell/completion.zsh" ]]; then
+    source "/usr/local/opt/fzf/shell/completion.zsh"
   fi
+  
   if [[ -f "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh" ]]; then
     source "$HOMEBREW_PREFIX/opt/fzf/shell/key-bindings.zsh"
+  elif [[ -f "/usr/local/opt/fzf/shell/key-bindings.zsh" ]]; then
+    source "/usr/local/opt/fzf/shell/key-bindings.zsh"
   fi
   
   # Custom fzf options
