@@ -1,0 +1,42 @@
+[shell]
+program = "/opt/homebrew/bin/zellij"
+args = [
+    "--layout",
+    "compact",
+    "--session",
+    "main"
+]
+
+[window]
+decorations = "buttonless"
+option_as_alt = "both"
+startup_mode = "Windowed"
+title = "Terminal"
+
+[window.dimensions]
+columns = 120
+lines = 40
+
+[window.padding]
+x = 10
+y = 10
+
+# macOS-specific window settings
+opacity = 0.98
+blur = true
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+style = "Block"
+blinking = "On"
+blink_interval = 750
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0

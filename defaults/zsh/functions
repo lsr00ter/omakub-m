@@ -1,0 +1,200 @@
+# Compression
+compress() { tar -czf "${1%/}.tar.gz" "${1%/}"; }
+alias decompress="tar -xzf"
+
+# Convert webm files to mp4s (macOS version)
+webm2mp4() {
+  input_file="$1"
+  output_file="${input_file%.webm}.mp4"
+  ffmpeg -i "$input_file" -c:v libx264 -preset slow -crf 22 -c:a aac -b:a 192k "$output_file"
+}
+
+# Write iso file to USB drive (macOS version)
+iso2usb() {
+  if [ $# -ne 2 ]; then
+    echo "Usage: iso2usb <input_file> <output_device>"
+    echo "Example: iso2usb ~/Downloads/ubuntu-25.04-desktop-amd64.iso /dev/disk2"
+    echo -e "\nAvailable USB drives:"
+    diskutil list | grep "external, physical"
+  else
+    echo "Unmounting disk $2..."
+    diskutil unmountDisk "$2"
+    echo "Writing ISO to USB drive..."
+    sudo dd if="$1" of="$2" bs=1m status=progress
+    echo "Ejecting USB drive..."
+    diskutil eject "$2"
+  fi
+}
+
+# Create a macOS app wrapper for a web app
+web2app() {
+  if [ "$#" -ne 3 ]; then
+    echo "Usage: web2app <AppName> <AppURL> <IconURL> (IconURL must be in PNG)"
+    return 1
+  fi
+
+  local APP_NAME="$1"
+  local APP_URL="$2"
+  local ICON_URL="$3"
+  local APP_DIR="/Applications/${APP_NAME}.app"
+  local CONTENTS_DIR="${APP_DIR}/Contents"
+  local MACOS_DIR="${CONTENTS_DIR}/MacOS"
+  local RESOURCES_DIR="${CONTENTS_DIR}/Resources"
+  local ICON_PATH="${RESOURCES_DIR}/${APP_NAME}.png"
+
+  # Create app bundle structure
+  mkdir -p "$MACOS_DIR" "$RESOURCES_DIR"
+
+  # Download icon
+  if ! curl -sL -o "$ICON_PATH" "$ICON_URL"; then
+    echo "Error: Failed to download icon."
+    return 1
+  fi
+
+  # Create Info.plist
+  cat > "${CONTENTS_DIR}/Info.plist" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>${APP_NAME}</string>
+    <key>CFBundleIconFile</key>
+    <string>${APP_NAME}.png</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.omakub.${APP_NAME,,}</string>
+    <key>CFBundleName</key>
+    <string>${APP_NAME}</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+</dict>
+</plist>
+EOF
+
+  # Create executable script
+  cat > "${MACOS_DIR}/${APP_NAME}" <<EOF
+#!/bin/bash
+open -a "Google Chrome" --args --app="$APP_URL" --name="$APP_NAME"
+EOF
+
+  chmod +x "${MACOS_DIR}/${APP_NAME}"
+  echo "Created ${APP_NAME}.app in /Applications"
+}
+
+# Remove web app
+web2app-remove() {
+  if [ "$#" -ne 1 ]; then
+    echo "Usage: web2app-remove <AppName>"
+    return 1
+  fi
+
+  local APP_NAME="$1"
+  local APP_DIR="/Applications/${APP_NAME}.app"
+  
+  if [ -d "$APP_DIR" ]; then
+    rm -rf "$APP_DIR"
+    echo "Removed ${APP_NAME}.app"
+  else
+    echo "App ${APP_NAME}.app not found"
+  fi
+}
+
+# macOS-specific: Add app to dock
+app2dock() {
+  if [ "$#" -ne 1 ]; then
+    echo "Usage: app2dock <AppName>"
+    return 1
+  fi
+  
+  local APP_NAME="$1"
+  local APP_PATH="/Applications/${APP_NAME}.app"
+  
+  if [ ! -d "$APP_PATH" ]; then
+    echo "App not found: $APP_PATH"
+    return 1
+  fi
+  
+  defaults write com.apple.dock persistent-apps -array-add "<dict><key>tile-data</key><dict><key>file-data</key><dict><key>_CFURLString</key><string>$APP_PATH</string><key>_CFURLStringType</key><integer>0</integer></dict></dict></dict>"
+  killall Dock
+}
+
+# macOS-specific: Remove app from dock
+app2dock-remove() {
+  if [ "$#" -ne 1 ]; then
+    echo "Usage: app2dock-remove <AppName>"
+    return 1
+  fi
+  
+  local APP_NAME="$1"
+  # This is complex in macOS, recommend using Dock preferences
+  echo "To remove $APP_NAME from Dock, drag it out of the Dock manually"
+  echo "Or use: System Preferences → Dock & Menu Bar"
+}
+
+# macOS-specific: Show/hide hidden files in Finder
+toggle_hidden_files() {
+  local current=$(defaults read com.apple.finder AppleShowAllFiles)
+  if [[ "$current" == "true" ]]; then
+    defaults write com.apple.finder AppleShowAllFiles false
+    echo "Hidden files are now hidden"
+  else
+    defaults write com.apple.finder AppleShowAllFiles true
+    echo "Hidden files are now visible"
+  fi
+  killall Finder
+}
+
+# macOS-specific: Empty trash
+empty_trash() {
+  echo "Emptying Trash..."
+  osascript -e 'tell application "Finder" to empty trash'
+}
+
+# macOS-specific: Lock screen
+lock_screen() {
+  osascript -e 'tell application "System Events" to keystroke "q" using {command down, control down}'
+}
+
+# macOS-specific: Sleep display
+sleep_display() {
+  pmset displaysleepnow
+}
+
+# macOS-specific: Show system information
+sysinfo() {
+  echo "=== macOS System Information ==="
+  echo "OS Version: $(sw_vers -productVersion)"
+  echo "Build: $(sw_vers -buildVersion)"
+  echo "Hardware: $(system_profiler SPHardwareDataType | grep "Model Name" | awk -F: '{print $2}' | xargs)"
+  echo "Processor: $(sysctl -n machdep.cpu.brand_string)"
+  echo "Memory: $(system_profiler SPHardwareDataType | grep "Memory" | awk -F: '{print $2}' | xargs)"
+  echo "Architecture: $(uname -m)"
+  echo "Uptime: $(uptime | awk -F'up ' '{print $2}' | awk -F', load' '{print $1}')"
+}
+
+# Fix external keyboard F-keys (macOS version)
+fix_fkeys() {
+  echo "Setting F-keys as primary function keys..."
+  defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+  echo "F-keys will work as function keys by default after restart"
+}
+
+# Create a simple backup function
+backup() {
+  if [ "$#" -ne 2 ]; then
+    echo "Usage: backup <source> <destination>"
+    return 1
+  fi
+  
+  local source="$1"
+  local dest="$2"
+  local timestamp=$(date +"%Y%m%d_%H%M%S")
+  local backup_name="backup_${timestamp}"
+  
+  rsync -av --progress "$source" "${dest}/${backup_name}"
+  echo "Backup completed: ${dest}/${backup_name}"
+}

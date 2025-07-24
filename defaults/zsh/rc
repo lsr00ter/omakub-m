@@ -1,0 +1,5 @@
+source ~/.local/share/omakub-macos/defaults/zsh/shell
+source ~/.local/share/omakub-macos/defaults/zsh/aliases
+source ~/.local/share/omakub-macos/defaults/zsh/functions
+source ~/.local/share/omakub-macos/defaults/zsh/prompt
+source ~/.local/share/omakub-macos/defaults/zsh/init

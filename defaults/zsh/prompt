@@ -1,0 +1,40 @@
+# Enable colors in prompt
+autoload -U colors && colors
+
+# Simple prompt with path in the window/pane title and caret for typing line
+# Using the same icon as bash version (0xa9 = ©, 0xf0a9 = )
+PROMPT=$'\uf0a9 '
+
+# Set window title to current directory (zsh equivalent of bash PS1)
+precmd() {
+    print -Pn "\e]0;%~\a"
+}
+
+# Alternative: More informative prompt (commented out by default)
+# Uncomment these lines for a more detailed prompt with git info
+
+# # Load git prompt functions
+# autoload -Uz vcs_info
+# 
+# # Configure git info in prompt
+# zstyle ':vcs_info:*' enable git
+# zstyle ':vcs_info:*' formats ' %F{green}(%b)%f'
+# zstyle ':vcs_info:*' actionformats ' %F{red}(%b|%a)%f'
+# 
+# # Function to update git info
+# precmd_vcs_info() {
+#     vcs_info
+# }
+# 
+# # Add git info to precmd functions
+# precmd_functions+=( precmd_vcs_info )
+# 
+# # Set prompt with git info
+# setopt prompt_subst
+# PROMPT='%F{blue}%~%f${vcs_info_msg_0_} %F{yellow}❯%f '
+
+# Right prompt with timestamp (optional)
+# RPROMPT='%F{gray}%T%f'
+
+# For compatibility with tools that expect PS1
+export PS1="$PROMPT"

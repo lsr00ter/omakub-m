@@ -1,0 +1,67 @@
+# History control
+setopt HIST_APPEND
+setopt HIST_IGNORE_BOTH
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+HISTSIZE=32768
+SAVEHIST="${HISTSIZE}"
+HISTFILE="${HOME}/.zsh_history"
+
+# Enable autocompletion
+autoload -Uz compinit
+compinit
+
+# Case insensitive completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Set complete path for macOS
+export PATH="./bin:$HOME/.local/bin:$HOME/.local/share/omakub-macos/bin:$HOMEBREW_PREFIX/bin:$HOMEBREW_PREFIX/sbin:$PATH"
+
+# macOS-specific environment variables
+export OMAKUB_PATH="$HOME/.local/share/omakub-macos"
+
+# Detect architecture and set Homebrew path
+if [[ $(uname -m) == "arm64" ]]; then
+    export HOMEBREW_PREFIX="/opt/homebrew"
+else
+    export HOMEBREW_PREFIX="/usr/local"
+fi
+
+# Add Homebrew to PATH
+eval "$($HOMEBREW_PREFIX/bin/brew shellenv)"
+
+# Configure PKG_CONFIG_PATH for Homebrew libraries
+export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/openssl@3/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/readline/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/libffi/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/libxml2/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PKG_CONFIG_PATH="$HOMEBREW_PREFIX/opt/libxslt/lib/pkgconfig:$PKG_CONFIG_PATH"
+
+# Configure library paths for compilation
+export LDFLAGS="-L$HOMEBREW_PREFIX/opt/openssl@3/lib -L$HOMEBREW_PREFIX/opt/readline/lib -L$HOMEBREW_PREFIX/opt/libffi/lib"
+export CPPFLAGS="-I$HOMEBREW_PREFIX/opt/openssl@3/include -I$HOMEBREW_PREFIX/opt/readline/include -I$HOMEBREW_PREFIX/opt/libffi/include"
+
+# Enable key bindings for better terminal navigation
+bindkey -e  # Use emacs-style key bindings
+bindkey '^[[A' history-search-backward    # Up arrow
+bindkey '^[[B' history-search-forward     # Down arrow
+bindkey '^R' history-incremental-search-backward
+bindkey '^S' history-incremental-search-forward
+
+# Enable extended globbing
+setopt EXTENDED_GLOB
+
+# Disable beep
+unsetopt BEEP
+
+# Change directory without typing cd
+setopt AUTO_CD
+
+# Correct typos in directory names
+setopt CORRECT
+
+# Show directory stack when using pushd/popd
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
