@@ -94,13 +94,22 @@ All subcommands are adapted for macOS using zsh instead of bash:
 - **`header.sh`** - Displays ASCII art and version info with "macOS" designation
 - **`menu.sh`** - Interactive menu system with Theme, Font, Update, Install, Uninstall, Manual, Quit options
 - **`theme.sh`** - Apply themes to macOS-compatible applications:
-  - Alacritty terminal themes (same as Ubuntu)
-  - Zellij multiplexer themes (same as Ubuntu)
-  - Neovim editor themes (same as Ubuntu)
-  - btop system monitor themes (same as Ubuntu)
-  - VSCode themes (same as Ubuntu)
+  - **Terminal Applications** (Complete ✅):
+    - Alacritty terminal themes (7 themes: tokyo-night, catppuccin, nord, everforest, gruvbox, kanagawa, rose-pine)
+    - Zellij multiplexer themes (all 7 themes supported)  
+    - Neovim editor themes (all 7 themes supported)
+    - btop system monitor themes (all 7 themes supported)
+    - VSCode themes (all 7 themes supported)
+  - **macOS System Integration** (Complete ✅):
+    - System accent color matching theme colors
+    - Dark mode activation  
+    - macOS-specific visual preferences
+  - **Platform-Specific Handling** (Complete ✅):
+    - macOS version uses `vscode-macos.sh` with correct macOS paths
+    - Ubuntu-specific scripts (`gnome.sh`, `tophat.sh`, `chrome.sh`) are intentionally skipped
+    - Cross-platform files (alacritty, zellij, neovim, btop) work on both platforms
   - **Excludes**: GNOME themes (not applicable), tophat themes (Linux-specific)
-  - **Includes**: macOS-specific theme scripts if available (`themes/*/macos.sh`)
+  - **Includes**: macOS-specific theme scripts for all themes (`themes/*/macos.sh`)
 
 #### Font Management
 

@@ -30,11 +30,18 @@ if [ -n "$THEME" ] && [ "$THEME" != "<<-back" ]; then
     source $OMAKUB_PATH/themes/$THEME/macos.sh
   fi
   
-  # Apply VSCode theme (works on macOS)
-  source $OMAKUB_PATH/themes/$THEME/vscode.sh
+  # Apply VSCode theme (macOS-specific version)
+  if [ -f "$OMAKUB_PATH/themes/$THEME/vscode-macos.sh" ]; then
+    source $OMAKUB_PATH/themes/$THEME/vscode-macos.sh
+  else
+    echo "Warning: macOS-specific VSCode theme not found for $THEME"
+  fi
 
-  # Note: Skip GNOME theming (not applicable to macOS)
-  # Note: Skip tophat theming (Linux-specific system monitor)
+  # Note: Ubuntu-specific scripts are intentionally skipped on macOS:
+  # - gnome.sh (GNOME desktop theming - not applicable)
+  # - tophat.sh (Linux-specific GNOME extension - not applicable)  
+  # - chrome.sh (uses Linux-specific approaches - not applicable)
+  # - vscode.sh (uses Linux paths - replaced with vscode-macos.sh)
   
   echo "Theme '$THEME' applied successfully!"
   echo "Note: Some changes may require restarting applications."

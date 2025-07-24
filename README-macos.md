@@ -75,7 +75,7 @@ cd omakub-macos
 
 ### Configuration Management
 
-- `configs/` - Template configuration files for Ubuntu applications  
+- `configs/` - Template configuration files for Ubuntu applications
 - `configs-macos/` - macOS-adapted configuration files with platform-specific settings
 - `defaults/bash/` - Default bash configuration for Ubuntu
 - `defaults/zsh/` - Zsh shell configuration (replacing bash for macOS)
@@ -207,19 +207,28 @@ source install/terminal/libraries-macos.sh
 - [x] Configuration file management with configs-macos
 - [x] All macOS scripts updated to use configs-macos directory
 
-### 🚧 In Progress (Phase 3: Configuration & Theming)
+### ✅ Complete (Phase 3: Configuration & Theming)
 
-- [x] Shell configuration (zsh adaptation) 
+- [x] Shell configuration (zsh adaptation)
 - [x] Configuration templates with macOS adaptations
-- [ ] Theme system for terminal applications
-- [ ] Font installation system
+- [x] Theme system for terminal applications (7 themes, 5 applications)
+- [x] Font installation system (4 Nerd Fonts, macOS paths)
 
-### 📋 Future (Phase 4: Polish & Integration)
+### ✅ Complete (Phase 4: Polish & Integration)
 
-- [ ] CLI management interface (`omakub-macos` command)
-- [ ] Update and uninstall functionality
-- [ ] macOS-specific optimizations
-- [ ] CI/CD and automated testing
+- [x] CLI management interface (`omakub-macos` command)
+- [x] Update and uninstall functionality
+- [x] Basic macOS-specific optimizations
+
+### 🚧 Remaining Tasks (Phase 5: Advanced Features)
+
+#### CI/CD and Automated Testing
+
+- [ ] **GitHub Actions Workflow**: Automated testing on macOS runners
+- [ ] **Installation Testing**: Test fresh installations on different macOS versions
+- [ ] **Application Testing**: Verify all installed applications work correctly
+- [ ] **Theme Testing**: Automated theme switching and verification
+- [ ] **Update Testing**: Test update mechanisms and migration scripts
 
 ## Known Limitations
 
