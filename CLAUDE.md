@@ -83,10 +83,25 @@ The main command interface is through the `omakub` binary located at `bin/omakub
 
 ### Configuration Management
 
-- `configs/` - Template configuration files for various applications
-- `defaults/bash/` - Default bash configuration (aliases, functions, prompt)
+- `configs/` - Template configuration files for Ubuntu applications
+- `configs-macos/` - macOS-adapted configuration files with platform-specific settings
+- `defaults/bash/` - Default bash configuration (aliases, functions, prompt) for Ubuntu
+- `defaults/zsh/` - Zsh configuration (replacing bash for macOS)
 - `themes/` - Theme definitions for different color schemes (catppuccin, gruvbox, etc.)
 - Each theme includes configurations for alacritty, btop, gnome, neovim, vscode, zellij
+
+#### macOS Configuration Differences
+
+The `configs-macos/` directory contains macOS-adapted versions of configuration files:
+
+- **Alacritty**: macOS-optimized window settings, Homebrew path adjustments, native decorations
+- **Btop**: Simplified configuration with macOS-specific system monitoring settings
+- **VSCode**: macOS font stack, proper paths, additional UI preferences
+- **Fastfetch**: macOS system info display, proper age calculation using system_profiler
+- **Zellij**: Platform-independent multiplexer configuration (identical to Ubuntu)
+- **Neovim**: Transparency and scrolling settings (identical to Ubuntu)
+- **Typora**: macOS-specific theme path configurations
+- **Shell**: Zsh configuration instead of Bash (inputrc adapted for Zsh)
 
 ### User Interaction
 

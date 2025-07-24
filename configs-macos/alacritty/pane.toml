@@ -1,0 +1,6 @@
+# Used by macOS desktop apps for pane-style windows with more padding
+import = [ "~/.config/alacritty/theme.toml", "~/.config/alacritty/font.toml", "~/.config/alacritty/font-size.toml", "~/.config/alacritty/shared.toml" ]
+
+[window]
+padding.x = 25
+padding.y = 25

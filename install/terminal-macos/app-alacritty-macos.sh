@@ -11,8 +11,8 @@ install_app_via_brew "alacritty" "--cask"
 mkdir -p ~/.config/alacritty
 
 # Copy alacritty config if available
-if [[ -f ~/.local/share/omakub-macos/configs/alacritty.toml ]]; then
-    cp ~/.local/share/omakub-macos/configs/alacritty.toml ~/.config/alacritty/alacritty.toml
+if [[ -f ~/.local/share/omakub-macos/configs-macos/alacritty.toml ]]; then
+    cp ~/.local/share/omakub-macos/configs-macos/alacritty.toml ~/.config/alacritty/alacritty.toml
     echo "✓ Alacritty configuration applied"
 fi
 

@@ -6,10 +6,10 @@ This is the macOS adaptation of Omakub - a shell script-based setup tool that tr
 
 ```bash
 # Bootstrap installation
-zsh <(curl -s https://raw.githubusercontent.com/your-repo/omakub-macos/main/boot-macos.sh)
+zsh <(curl -s https://raw.githubusercontent.com/lsr00ter/omakub-macos/main/boot-macos.sh)
 
 # Or clone and run locally
-git clone https://github.com/your-repo/omakub-macos.git
+git clone https://github.com/lsr00ter/omakub-macos.git
 cd omakub-macos
 ./boot-macos.sh
 ```
@@ -24,27 +24,32 @@ cd omakub-macos
 ## What Gets Installed
 
 ### Core Infrastructure
+
 - **Homebrew** - Package manager for macOS
 - **Git** - Version control
 - **gum** - Interactive prompts
 
 ### Terminal Applications
+
 - **Neovim** - Modern vim-based editor with LazyVim
 - **Alacritty** - GPU-accelerated terminal emulator
 - **btop** - System monitor
 - **fastfetch** - System information tool
 
 ### Desktop Applications
+
 - **Google Chrome** - Web browser
 - **Visual Studio Code** - Code editor
 - **Optional apps**: 1Password, Spotify, Zoom, Dropbox, Rectangle, Alfred, iTerm2
 
 ### Development Tools
+
 - **Programming Languages**: Ruby on Rails, Node.js, Go, PHP, Python, Elixir, Rust, Java
 - **Databases**: MySQL, Redis, PostgreSQL (via Docker)
 - **Development libraries**: autoconf, pkg-config, openssl, readline, etc.
 
 ### macOS Configurations
+
 - Dark mode enabled
 - Dock auto-hide and magnification
 - Finder path bar and status bar
@@ -55,22 +60,58 @@ cd omakub-macos
 ## Architecture
 
 ### Core Scripts
+
 - `boot-macos.sh` - Entry point that sets up Homebrew and clones the repo
 - `install-macos.sh` - Main orchestrator handling the full installation
 - `install/check-version-macos.sh` - Validates macOS version and architecture
 - `test-macos.sh` - Testing script for development
 
 ### Installation Framework
+
 - `install/terminal-macos.sh` - Orchestrates terminal application installation
 - `install/desktop-macos.sh` - Orchestrates desktop application installation
 - `install/terminal-macos/*.sh` - Individual terminal app installers
 - `install/desktop-macos/*.sh` - Individual desktop app installers
 
 ### Configuration Management
-- `configs/` - Template configuration files
+
+- `configs/` - Template configuration files for Ubuntu applications  
+- `configs-macos/` - macOS-adapted configuration files with platform-specific settings
+- `defaults/bash/` - Default bash configuration for Ubuntu
+- `defaults/zsh/` - Zsh shell configuration (replacing bash for macOS)
 - `install/first-run-choices-macos.sh` - User preference collection
 - `install/identification-macos.sh` - Git user setup
 - `install/desktop-macos/set-macos-preferences.sh` - System preferences
+
+#### configs-macos Structure
+
+The `configs-macos/` directory contains macOS-optimized configuration files:
+
+```bash
+configs-macos/
+├── alacritty.toml                    # Main terminal config
+├── alacritty/
+│   ├── font-size.toml               # macOS-optimized font sizing
+│   ├── fonts/                       # Font definitions
+│   │   ├── CaskaydiaMono.toml
+│   │   ├── FiraMono.toml
+│   │   ├── JetBrainsMono.toml
+│   │   └── MesloLGS.toml
+│   ├── pane.toml                    # Desktop app window settings
+│   └── shared.toml                  # macOS window decorations
+├── btop.conf                        # System monitor config
+├── fastfetch.jsonc                  # System info with macOS detection
+├── inputrc                          # Zsh-compatible readline config
+├── neovim/
+│   ├── transparency.lua             # Transparent background
+│   └── snacks-animated-scrolling-off.lua
+├── typora/
+│   ├── ia_typora.css               # Light theme
+│   └── ia_typora_night.css         # Dark theme
+├── vscode.json                      # macOS font stack & paths
+├── zellij.kdl                       # Terminal multiplexer
+└── zshrc                           # Zsh shell configuration
+```
 
 ### Key Differences from Ubuntu Version
 
@@ -86,7 +127,8 @@ cd omakub-macos
 ## Development
 
 ### File Structure
-```
+
+```bash
 omakub-macos/
 ├── boot-macos.sh                              # Entry point
 ├── install-macos.sh                           # Main installer
@@ -120,6 +162,7 @@ omakub-macos/
 1. **Terminal Applications**: Create `install/terminal-macos/app-{name}-macos.sh`
 2. **Desktop Applications**: Create `install/desktop-macos/app-{name}-macos.sh`
 3. **Use the standard pattern**:
+
    ```bash
    #!/bin/zsh
    source ~/.local/share/omakub-macos/install/terminal/libraries-macos.sh
@@ -149,6 +192,7 @@ source install/terminal/libraries-macos.sh
 ## Migration Status
 
 ### ✅ Completed (Phase 1: Core Infrastructure)
+
 - [x] macOS version detection and validation
 - [x] Homebrew integration and package management
 - [x] Core script structure and orchestration
@@ -156,19 +200,22 @@ source install/terminal/libraries-macos.sh
 - [x] System preferences configuration
 - [x] User interaction and choice collection
 
-### 🚧 In Progress (Phase 2: Application Installation)
-- [ ] Complete terminal application suite
-- [ ] Complete desktop application suite
-- [ ] Theme system adaptation
-- [ ] Configuration file management
+### ✅ Completed (Phase 2: Application Installation)
 
-### 📋 Planned (Phase 3: Configuration & Theming)
-- [ ] Shell configuration (zsh adaptation)
+- [x] Complete terminal application suite (Neovim, Alacritty, btop, fastfetch, Zellij)
+- [x] Complete desktop application suite (Chrome, VSCode, Typora, etc.)
+- [x] Configuration file management with configs-macos
+- [x] All macOS scripts updated to use configs-macos directory
+
+### 🚧 In Progress (Phase 3: Configuration & Theming)
+
+- [x] Shell configuration (zsh adaptation) 
+- [x] Configuration templates with macOS adaptations
 - [ ] Theme system for terminal applications
-- [ ] Configuration templates
 - [ ] Font installation system
 
 ### 📋 Future (Phase 4: Polish & Integration)
+
 - [ ] CLI management interface (`omakub-macos` command)
 - [ ] Update and uninstall functionality
 - [ ] macOS-specific optimizations
@@ -208,16 +255,41 @@ source install/terminal/libraries-macos.sh
 ### Architecture Detection
 
 The scripts automatically detect your Mac's architecture:
+
 - **Apple Silicon (M1/M2/M3)**: Uses `/opt/homebrew`
 - **Intel**: Uses `/usr/local`
 
 ### Logs and Debugging
 
 Enable verbose output:
+
 ```bash
 set -x  # Add to script for debugging
 brew install --verbose package-name
 ```
+
+## Configuration File Mapping
+
+### configs-macos vs configs Differences
+
+| File | Key macOS Adaptations |
+|------|----------------------|
+| **alacritty/shared.toml** | • Homebrew zellij path `/opt/homebrew/bin/zellij`<br>• Native window decorations `buttonless`<br>• macOS-specific window settings and blur |
+| **btop.conf** | • Simplified boolean values (`true`/`false` vs `True`/`False`)<br>• Removed Linux-specific GPU and kernel options |
+| **fastfetch.jsonc** | • Mac icon and macOS-specific detection<br>• Proper macOS age calculation using `system_profiler`<br>• Removed Desktop Environment detection |
+| **vscode.json** | • macOS font stack with SF Mono fallbacks<br>• Enhanced UI preferences for macOS<br>• Proper font ligatures and line height |
+| **zshrc** | • References `omakub-macos/defaults/zsh/rc`<br>• Zsh-specific instead of bash |
+| **typora/*.css** | • macOS-specific theme path configurations<br>• Compatible with macOS Typora directory structure |
+
+### Deployment Paths
+
+| Config File | Ubuntu Path | macOS Path |
+|-------------|-------------|------------|
+| VSCode settings | `~/.config/Code/User/settings.json` | `~/Library/Application Support/Code/User/settings.json` |
+| Typora themes | `~/.config/Typora/themes/` | `~/Library/Application Support/abnerworks.Typora/themes/` |
+| Other configs | `~/.config/[app]/` | `~/.config/[app]/` (same) |
+
+**Migration Complete**: All macOS installation scripts now reference `configs-macos/` with proper platform-specific adaptations.
 
 ## License
 

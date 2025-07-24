@@ -17,8 +17,8 @@ if [ ! -d "$HOME/.config/nvim" ]; then
     
     # Copy theme and configs (these would need to be created)
     mkdir -p ~/.config/nvim/plugin/after
-    if [[ -f ~/.local/share/omakub-macos/configs/neovim/transparency.lua ]]; then
-        cp ~/.local/share/omakub-macos/configs/neovim/transparency.lua ~/.config/nvim/plugin/after/
+    if [[ -f ~/.local/share/omakub-macos/configs-macos/neovim/transparency.lua ]]; then
+        cp ~/.local/share/omakub-macos/configs-macos/neovim/transparency.lua ~/.config/nvim/plugin/after/
     fi
     
     if [[ -f ~/.local/share/omakub-macos/themes/tokyo-night/neovim.lua ]]; then

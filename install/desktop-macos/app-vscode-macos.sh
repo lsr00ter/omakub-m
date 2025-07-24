@@ -13,8 +13,8 @@ function setup_vscode_config_macos() {
     mkdir -p "$vscode_dir"
     
     # Copy settings if available
-    if [[ -f ~/.local/share/omakub-macos/configs/vscode.json ]]; then
-        cp ~/.local/share/omakub-macos/configs/vscode.json "$vscode_dir/settings.json"
+    if [[ -f ~/.local/share/omakub-macos/configs-macos/vscode.json ]]; then
+        cp ~/.local/share/omakub-macos/configs-macos/vscode.json "$vscode_dir/settings.json"
         echo "✓ VSCode settings configured"
     fi
 }
