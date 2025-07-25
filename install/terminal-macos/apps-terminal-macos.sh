@@ -33,11 +33,13 @@ if command -v fzf &> /dev/null; then
     fi
 fi
 
-# Set up locate database (alternative to plocate)
-if command -v locate &> /dev/null; then
-    echo "Setting up locate database..."
-    sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
-fi
+# Note: locate database setup (alternative to plocate)
+# macOS manages the locate database automatically via com.apple.locate.plist
+# The system updates it periodically, so no manual setup is required
+# if command -v locate &> /dev/null; then
+#     echo "Setting up locate database..."
+#     sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
+# fi
 
 echo "📝 Note: Some tools may need additional configuration:"
 echo "   - fzf: Key bindings are configured in zsh init"
