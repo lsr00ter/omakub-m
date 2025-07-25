@@ -1,8 +1,8 @@
 #!/bin/zsh
 # macOS-specific theme settings for Everforest
 
-# Get the absolute path to this theme's directory
-THEME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Get the theme directory using OMAKUB_PATH
+THEME_DIR="$OMAKUB_PATH/themes/everforest"
 
 # Set macOS system accent color to green (matches Everforest nature theme)
 defaults write NSGlobalDomain AppleAccentColor -int 3

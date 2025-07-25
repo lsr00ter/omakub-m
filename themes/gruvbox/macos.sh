@@ -1,8 +1,8 @@
 #!/bin/zsh
 # macOS-specific theme settings for Gruvbox
 
-# Get the absolute path to this theme's directory
-THEME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Get the theme directory using OMAKUB_PATH
+THEME_DIR="$OMAKUB_PATH/themes/gruvbox"
 
 # Set macOS system accent color to orange (matches Gruvbox warm tones)
 defaults write NSGlobalDomain AppleAccentColor -int 1

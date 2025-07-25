@@ -1,8 +1,8 @@
 #!/bin/zsh
 # macOS-specific theme settings for Nord
 
-# Get the absolute path to this theme's directory
-THEME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Get the theme directory using OMAKUB_PATH
+THEME_DIR="$OMAKUB_PATH/themes/nord"
 
 # Set macOS system accent color to blue (matches Nord color scheme)
 defaults write NSGlobalDomain AppleAccentColor -int 4

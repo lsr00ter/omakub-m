@@ -1,8 +1,8 @@
 #!/bin/zsh
 # macOS-specific theme settings for Tokyo Night
 
-# Get the absolute path to this theme's directory
-THEME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Get the theme directory using OMAKUB_PATH
+THEME_DIR="$OMAKUB_PATH/themes/tokyo-night"
 
 # Set macOS system accent color to blue (closest to Tokyo Night theme)
 defaults write NSGlobalDomain AppleAccentColor -int 4

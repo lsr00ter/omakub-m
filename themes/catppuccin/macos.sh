@@ -1,8 +1,8 @@
 #!/bin/zsh
 # macOS-specific theme settings for Catppuccin
 
-# Get the absolute path to this theme's directory
-THEME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Get the theme directory using OMAKUB_PATH
+THEME_DIR="$OMAKUB_PATH/themes/catppuccin"
 
 # Set macOS system accent color to purple (matches Catppuccin)
 defaults write NSGlobalDomain AppleAccentColor -int 5

@@ -1,8 +1,8 @@
 #!/bin/zsh
 # macOS-specific theme settings for Rose Pine
 
-# Get the absolute path to this theme's directory
-THEME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+# Get the theme directory using OMAKUB_PATH
+THEME_DIR="$OMAKUB_PATH/themes/rose-pine"
 
 # Set macOS system accent color to pink (matches Rose Pine theme)
 defaults write NSGlobalDomain AppleAccentColor -int 6
