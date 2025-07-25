@@ -1,19 +1,15 @@
 #!/bin/zsh
 
 # Terminal applications installer for macOS
-# Equivalent to Ubuntu's: sudo apt install -y fzf ripgrep bat eza zoxide plocate apache2-utils fd-find tldr
+# Note: Core utilities (fzf, ripgrep, bat, eza, zoxide, fd, tree, jq, yq, curl, wget) 
+# are installed via libraries-macos.sh which is sourced above
 
 source ~/.local/share/omakub-macos/install/terminal-macos/libraries-macos.sh
 
 echo "Installing essential terminal applications..."
 
-# Core terminal utilities with Homebrew equivalents
-install_app_via_brew "fzf"          # Fuzzy finder (same name)
-install_app_via_brew "ripgrep"      # Fast grep replacement (same name)
-install_app_via_brew "bat"          # Better cat with syntax highlighting (same name)
-install_app_via_brew "eza"          # Better ls replacement (same name)
-install_app_via_brew "zoxide"       # Smart cd replacement (same name)
-install_app_via_brew "fd"           # Better find replacement (fd instead of fd-find)
+# Core terminal utilities (already installed via libraries-macos.sh)
+# fzf, ripgrep, bat, eza, zoxide, fd are installed in libraries-macos.sh
 install_app_via_brew "tldr"         # Simplified man pages (same name)
 
 # macOS alternatives for Ubuntu-specific tools
@@ -21,12 +17,8 @@ install_app_via_brew "tldr"         # Simplified man pages (same name)
 install_app_via_brew "httpie"       # Alternative to apache2-utils for HTTP testing
 
 # Additional useful terminal tools for macOS
-install_app_via_brew "tree"         # Directory tree visualization
+# tree, jq, yq, curl, wget are already installed in libraries-macos.sh
 install_app_via_brew "htop"         # Better top replacement
-install_app_via_brew "jq"           # JSON processor
-install_app_via_brew "yq"           # YAML processor
-install_app_via_brew "curl"         # HTTP client (usually pre-installed)
-install_app_via_brew "wget"         # Download utility
 
 echo "✓ Terminal applications installed successfully"
 
