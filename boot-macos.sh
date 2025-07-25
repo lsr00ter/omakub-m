@@ -37,7 +37,7 @@ fi
 echo "Cloning Omakub for macOS..."
 rm -rf ~/.local/share/omakub-macos
 mkdir -p ~/.local/share
-git clone https://github.com/lsr00ter/omakub-m.git ~/.local/share/omakub-macos >/dev/null
+git clone https://github.com/lsr00ter/omakub-macos.git ~/.local/share/omakub-macos >/dev/null
 
 # Note: For now using the Ubuntu repo, but this would be changed to omakub-macos repo when available
 if [[ $OMAKUB_REF != "master" ]]; then

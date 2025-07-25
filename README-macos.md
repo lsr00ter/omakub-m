@@ -9,9 +9,11 @@ This is the macOS adaptation of Omakub - a shell script-based setup tool that tr
 zsh <(curl -s https://raw.githubusercontent.com/lsr00ter/omakub-macos/master/boot-macos.sh)
 
 # Or clone and run locally
-git clone https://github.com/lsr00ter/omakub-macos.git
+rm -rf ~/.local/share/omakub-macos
+mkdir -p ~/.local/share
+git clone https://github.com/lsr00ter/omakub-macos.git ~/.local/share/omakub-macos >/dev/null
 cd omakub-macos
-./boot-macos.sh
+source ~/.local/share/omakub-macos/install-macos.sh
 ```
 
 ## Requirements
