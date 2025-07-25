@@ -12,8 +12,25 @@ osascript -e "tell application \"System Events\" to tell appearance preferences 
 
 # Set desktop wallpaper to Nord background
 if [ -f "$THEME_DIR/background.png" ]; then
-    osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$THEME_DIR/background.png\""
-    echo "Desktop wallpaper set to Nord background"
+    # Method 1: Try using System Events (more reliable)
+    osascript -e "
+    tell application \"System Events\"
+        tell every desktop
+            set picture to \"$THEME_DIR/background.png\"
+        end tell
+    end tell" 2>/dev/null
+    
+    if [ $? -eq 0 ]; then
+        echo "Desktop wallpaper set to Nord background"
+    else
+        # Method 2: Fallback to sqlite method for newer macOS versions
+        sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '$THEME_DIR/background.png'" 2>/dev/null && killall Dock
+        if [ $? -eq 0 ]; then
+            echo "Desktop wallpaper set to Nord background (via database method)"
+        else
+            echo "Warning: Could not set Nord wallpaper. You can set it manually in System Preferences > Desktop & Screen Saver"
+        fi
+    fi
 else
     echo "Warning: Nord background image not found at $THEME_DIR/background.png"
 fi
