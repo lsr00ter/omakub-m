@@ -18,8 +18,24 @@ This repository has been adapted to support macOS alongside Ubuntu. The macOS ve
 - `install-macos.sh` - Main macOS orchestrator
 - `install/terminal-macos/` - macOS terminal applications using Homebrew
 - `install/desktop-macos/` - macOS desktop applications using Homebrew Cask
+- `install/desktop-macos/cleanup-dock-macos.sh` - Removes unwanted default apps from dock
 - `install/desktop-macos/optional/` - Optional macOS desktop applications (22 apps)
 - `defaults/zsh/` - Zsh configuration (replacing bash for macOS)
+
+#### Dock Cleanup
+
+During installation, the following default macOS applications are automatically removed from the dock:
+- Messages
+- Maps
+- Photos
+- FaceTime
+- Contacts
+- Freeform
+- TV
+- Music
+- App Store
+
+Essential apps like Finder, Safari, and System Preferences are kept in the dock.
 
 ### Key macOS Differences
 
@@ -28,6 +44,7 @@ This repository has been adapted to support macOS alongside Ubuntu. The macOS ve
 - **System Preferences**: `defaults` commands instead of `gsettings`
 - **Application Installation**: Homebrew Cask instead of Flatpak/Snap
 - **Path Structure**: macOS-specific paths for configurations and applications
+- **Dock Management**: Automatic cleanup of unwanted default apps during installation
 
 ### macOS Optional Apps (22 Total)
 
@@ -214,10 +231,11 @@ This allows running `omakub-macos` from anywhere in the terminal after the shell
 - `bin/omakub` - CLI interface for post-installation management
 - `bin/omakub-sub/` - Subcommands for the CLI interface
 
-**macOS:**
+**macOS Version:**
 
 - `boot-macos.sh` - macOS entry point with Homebrew setup and repository cloning
 - `install-macos.sh` - Main macOS orchestrator for terminal and desktop installation
+- `install/desktop-macos/cleanup-dock-macos.sh` - Removes unwanted default apps from dock
 - `bin/omakub-macos` - CLI interface for macOS post-installation management
 - `bin/omakub-sub-macos/` - macOS-specific subcommands using zsh instead of bash
 

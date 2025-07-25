@@ -15,6 +15,9 @@ source ~/.local/share/omakub-macos/install/terminal-macos/required/app-gum-macos
 source ~/.local/share/omakub-macos/install/first-run-choices-macos.sh
 source ~/.local/share/omakub-macos/install/identification-macos.sh
 
+# Clean up default dock apps before installation
+source ~/.local/share/omakub-macos/install/desktop-macos/cleanup-dock-macos.sh
+
 # macOS always has a desktop environment, so we install both terminal and desktop tools
 echo "Installing terminal and desktop tools for macOS..."
 

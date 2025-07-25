@@ -52,6 +52,7 @@ cd omakub-macos
 
 - Dark mode enabled
 - Dock auto-hide and magnification
+- Automatic cleanup of unwanted default dock apps (Messages, Maps, Photos, FaceTime, etc.)
 - Finder path bar and status bar
 - Improved keyboard repeat rates
 - Trackpad tap-to-click
@@ -82,6 +83,7 @@ cd omakub-macos
 - `install/first-run-choices-macos.sh` - User preference collection
 - `install/identification-macos.sh` - Git user setup
 - `install/desktop-macos/set-macos-preferences.sh` - System preferences
+- `install/desktop-macos/cleanup-dock-macos.sh` - Removes unwanted default dock apps
 
 #### configs-macos Structure
 
