@@ -27,7 +27,6 @@ install_app_via_brew "jq"           # JSON processor
 install_app_via_brew "yq"           # YAML processor
 install_app_via_brew "curl"         # HTTP client (usually pre-installed)
 install_app_via_brew "wget"         # Download utility
-install_app_via_brew "dockutil"     # Dock mgmt
 
 echo "✓ Terminal applications installed successfully"
 

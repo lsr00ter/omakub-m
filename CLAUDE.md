@@ -25,6 +25,7 @@ This repository has been adapted to support macOS alongside Ubuntu. The macOS ve
 #### Dock Cleanup
 
 During installation, the following default macOS applications are automatically removed from the dock:
+
 - Messages
 - Maps
 - Photos
@@ -113,13 +114,13 @@ All subcommands are adapted for macOS using zsh instead of bash:
 - **`theme.sh`** - Apply themes to macOS-compatible applications:
   - **Terminal Applications** (Complete ✅):
     - Alacritty terminal themes (7 themes: tokyo-night, catppuccin, nord, everforest, gruvbox, kanagawa, rose-pine)
-    - Zellij multiplexer themes (all 7 themes supported)  
+    - Zellij multiplexer themes (all 7 themes supported)
     - Neovim editor themes (all 7 themes supported)
     - btop system monitor themes (all 7 themes supported)
     - VSCode themes (all 7 themes supported)
   - **macOS System Integration** (Complete ✅):
     - System accent color matching theme colors
-    - Dark mode activation  
+    - Dark mode activation
     - macOS-specific visual preferences
   - **Platform-Specific Handling** (Complete ✅):
     - macOS version uses `vscode-macos.sh` with correct macOS paths

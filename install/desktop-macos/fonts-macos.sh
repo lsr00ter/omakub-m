@@ -5,10 +5,7 @@ echo "Installing programming fonts..."
 
 source ~/.local/share/omakub-macos/install/terminal-macos/libraries-macos.sh
 
-# Install essential programming fonts via Homebrew tap
-brew tap homebrew/cask-fonts
-
-# Install popular programming fonts
+# Install popular programming fonts directly (no tap needed)
 install_app_via_brew "font-fira-code" "--cask"
 install_app_via_brew "font-cascadia-mono" "--cask"  
 install_app_via_brew "font-jetbrains-mono" "--cask"

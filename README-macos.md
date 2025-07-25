@@ -6,7 +6,7 @@ This is the macOS adaptation of Omakub - a shell script-based setup tool that tr
 
 ```bash
 # Bootstrap installation
-zsh <(curl -s https://raw.githubusercontent.com/lsr00ter/omakub-macos/main/boot-macos.sh)
+zsh <(curl -s https://raw.githubusercontent.com/lsr00ter/omakub-macos/master/boot-macos.sh)
 
 # Or clone and run locally
 git clone https://github.com/lsr00ter/omakub-macos.git
@@ -301,6 +301,15 @@ brew install --verbose package-name
 | Other configs | `~/.config/[app]/` | `~/.config/[app]/` (same) |
 
 **Migration Complete**: All macOS installation scripts now reference `configs-macos/` with proper platform-specific adaptations.
+
+## References
+
+### macOS Configuration
+
+- **[macOS Defaults](https://macos-defaults.com/)** - Comprehensive database of macOS `defaults` commands and system preferences
+  - Documentation for all `defaults write` commands used in this project
+  - Browse settings by application (Dock, Finder, Safari, etc.)
+  - Understand what each configuration change does to your system
 
 ## License
 
