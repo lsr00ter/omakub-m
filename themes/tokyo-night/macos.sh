@@ -1,11 +1,22 @@
 #!/bin/zsh
 # macOS-specific theme settings for Tokyo Night
 
+# Get the absolute path to this theme's directory
+THEME_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
 # Set macOS system accent color to blue (closest to Tokyo Night theme)
 defaults write NSGlobalDomain AppleAccentColor -int 4
 
 # Set macOS to dark mode
 osascript -e "tell application \"System Events\" to tell appearance preferences to set dark mode to true"
+
+# Set desktop wallpaper to Tokyo Night background
+if [ -f "$THEME_DIR/background.jpg" ]; then
+    osascript -e "tell application \"Finder\" to set desktop picture to POSIX file \"$THEME_DIR/background.jpg\""
+    echo "Desktop wallpaper set to Tokyo Night background"
+else
+    echo "Warning: Tokyo Night background image not found at $THEME_DIR/background.jpg"
+fi
 
 # Configure Terminal.app with Tokyo Night colors (if user prefers Terminal.app over Alacritty)
 if [[ -n "$TOKYO_NIGHT_TERMINAL" ]]; then
