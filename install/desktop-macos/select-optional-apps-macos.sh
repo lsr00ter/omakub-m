@@ -8,7 +8,7 @@ if [[ -v OMAKUB_FIRST_RUN_OPTIONAL_APPS ]]; then
 
 	if [[ -n "$apps" ]]; then
 		for app in $apps; do
-			source "$OMAKUB_PATH/install/desktop-macos/optional/app-${app,,}-macos.sh"
+			source "$OMAKUB_PATH/install/desktop-macos/optional/app-${app:l}-macos.sh"
 		done
 	fi
 fi
